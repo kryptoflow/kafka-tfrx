@@ -1,2 +1,4 @@
 confluent-kafka
 rx
+pytest
+pytest-cov
