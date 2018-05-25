@@ -2,7 +2,8 @@ kafka-tfrx
 ==========
 
 
-[![Build Status](https://travis-ci.org/carlomazzaferro/kryptoflow.svg?branch=master)](https://travis-ci.org/carlomazzaferro/kryptoflow)
+[![Build Status](https://travis-ci.org/kryptoflow/kafka-tfrx.svg?branch=master)](https://travis-ci.org/kryptoflow/kafka-tfrx)
+
 Simple, idiomatic python API to interface Kafka topics with [RxPY](https://github.com/ReactiveX/RxPY)
 
 ## Description
