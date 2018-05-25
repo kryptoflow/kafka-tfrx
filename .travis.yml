@@ -13,7 +13,6 @@ before-install:
   - apt-get install -y librdkafka-dev librdkafka1
 
 install:
-  - pip install -e .
   - pip install tox-travis
 # command to run tests
 script:
