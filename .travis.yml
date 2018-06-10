@@ -2,18 +2,25 @@ dist: trusty
 sudo: required
 language: python
 python:
-  - "3.5"
-  - "3.6"
-# command to install dependencies
+- '3.5'
+- '3.6'
 before-install:
-  - apt-get update -y
-  - apt-get install -y software-properties-common
-  - wget -qO - 'https://packages.confluent.io/deb/4.0/archive.key' | apt-key add -
-  - add-apt-repository "deb [arch=amd64] https://packages.confluent.io/deb/4.0 stable main"
-  - apt-get install -y librdkafka-dev librdkafka1
-
+- apt-get update -y
+- apt-get install -y software-properties-common
+- wget -qO - 'https://packages.confluent.io/deb/4.0/archive.key' | apt-key add -
+- add-apt-repository "deb [arch=amd64] https://packages.confluent.io/deb/4.0 stable
+  main"
+- apt-get install -y librdkafka-dev librdkafka1
 install:
-  - pip install tox-travis
-# command to run tests
+- pip install tox-travis
 script:
-  -  tox
+- tox
+deploy:
+  provider: pypi
+  user: mazzafish
+  password:
+    secure: UGiLBZOgRZBI/jdnflwSwAIsAQkPDdLY1LNa1uxHkBEg4JT989Rz5KLVoOFhNNFrYhdmG4iXJaBrsAZ/LbBoOpPZI13gf071IzgiQEptg/uZE42Dn2tM5trFci75P+MQctQ7Ys3VUWBAVbnCBa1oYEZHkD9OPUqV9WjtpFqkesK76TY3k8v2eMXiDF5gezyQV+IFSf6LplC6WyREbTLvQ7yrw+ebMZz8hAlgWG6FA1yNmFyVeaxVKGMOvldAG8GePBJpypd0yn7Z1ALBlttDnOjzqHWUukrbqn6rsb3z6WyYvBD7z1x0PtPHtcOYMaeH3nIl8Go4yzx3XGFWw9Vmk2gMH8ri+1y2LJUtfrl2xiVt9JZmgm3YciaGHp4O1zDpHZlBglriQx9VGsfYkRjJEeJFDGBGIltpKGcpVRzKcXLoi5BUnYDEqMNmG+VeZo0mKBf87s7pD/daGaxvgwddbtDy8M6mLFuHEGEJpzeCOkAohjIZdkILSYbVUPMPImddr7lCCmIDTDsipLMhmhDk5y9SD26rPYCqPvHawBubY+dVMbNlYbvy2XdO5eVKAEcEe06Fs6rwsw1F0+EQGTON9IppCMN7q52E42qO9799bf0MoVKcXkEn02T6p6Wwy5ZtdeSLYILN4cyUGmUnlPlycovaQCvuk4jKgEIRZTg+1jw=
+
+# deploy on tag
+on:
+    tags: true
