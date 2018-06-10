@@ -9,7 +9,7 @@
 """
 
 import sys
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # Add here console scripts and other entry points in ini-style format
 entry_points = """
@@ -21,11 +21,10 @@ entry_points = """
 
 
 def setup_package():
-    needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
-    sphinx = ['sphinx'] if needs_sphinx else []
-    setup(setup_requires=['pyscaffold>=3.0a0,<3.1a0'] + sphinx,
-          entry_points=entry_points,
-          use_pyscaffold=True)
+    setup(entry_points=entry_points,
+          version='0.12',
+          tests_require=['pytest', 'pytest-cov', 'pytest-runner'],
+          packages=find_packages(exclude=['docs', 'tests'], include=['kafka_tfrx']))
 
 
 if __name__ == "__main__":
