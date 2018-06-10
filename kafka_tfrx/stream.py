@@ -85,7 +85,7 @@ class KafkaStream(BaseIterator):
         if not schema_path:
             raise ValueError('Path to schema files must be provided when using avro_producer')
         else:
-            return {os.path.basename(topic).split('.avsc')[0]: os.path.join(schema_path, topic) for \
+            return {os.path.basename(topic).split('.avsc')[0]: os.path.join(schema_path, topic) for
                     topic in os.listdir(schema_path)}
 
     @classmethod
@@ -94,3 +94,7 @@ class KafkaStream(BaseIterator):
             return os.environ['KAFKA_SERVER_IP']
         except KeyError:
             return 'localhost'
+
+    def bind(self, other: AvroProducer, fn: callable):
+        other.produce()
+

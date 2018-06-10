@@ -17,6 +17,14 @@ but it is by no means limited to that. In a way, it provides a subset of the fun
 which currently does not have a stable python implementation. 
 
 
+## Usage
+
+See `examples/`
+
+
+## Tests
+
+Run `tox` from top level dir
 
 ## Note
 
