@@ -52,18 +52,20 @@ class KafkaStream(BaseIterator):
                'end': confluent_kafka.OFFSET_END}
 
     @classmethod
-    def avro_producer(cls, topic='gdax', schemas=None):
-        ip = cls.determine_ip()
+    def avro_producer(cls, topic='gdax', schemas=None, ip=None):
+        if not ip:
+            ip = cls.determine_ip()
         return AvroProducer({'bootstrap.servers': ip + ':9092',
                              'schema.registry.url': 'http://' + ip + ':8081'},
                             default_key_schema=cls.schemas(schemas)['keyschema'],
                             default_value_schema=cls.schemas(schemas)[topic])
 
     @classmethod
-    def avro_consumer(cls, topic='gdax', offset='start', group_id=None):
+    def avro_consumer(cls, topic='gdax', offset='start', group_id=None, ip=None):
         if not group_id:
             group_id = str(uuid.uuid1()).split('-')[0]
-        ip = cls.determine_ip()
+        if not ip:
+            ip = cls.determine_ip()
         try:
             _offset = cls.OFFSETS[offset]
         except KeyError:
