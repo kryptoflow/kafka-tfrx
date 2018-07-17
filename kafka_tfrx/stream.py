@@ -2,8 +2,8 @@ from __future__ import division, print_function, absolute_import
 
 import logging
 import os
-from confluent_kafka import avro, TopicPartition
-from confluent_kafka.avro import AvroProducer, AvroConsumer
+from confluent_kafka import TopicPartition
+from confluent_kafka.avro import AvroProducer, AvroConsumer, load
 from confluent_kafka import KafkaError
 import confluent_kafka
 import uuid
@@ -57,8 +57,8 @@ class KafkaStream(BaseIterator):
             ip = cls.determine_ip()
         return AvroProducer({'bootstrap.servers': ip + ':9092',
                              'schema.registry.url': 'http://' + ip + ':8081'},
-                            default_key_schema=cls.schemas(schemas)['keyschema'],
-                            default_value_schema=cls.schemas(schemas)[topic])
+                            default_value_schema=load(cls.schemas(schemas)[topic]),
+                            default_key_schema=load(os.path.join(schemas, 'keyschema.avsc')))
 
     @classmethod
     def avro_consumer(cls, topic='gdax', offset='start', group_id=None, ip=None):
@@ -87,8 +87,9 @@ class KafkaStream(BaseIterator):
         if not schema_path:
             raise ValueError('Path to schema files must be provided when using avro_producer')
         else:
-            return {os.path.basename(topic).split('.avsc')[0]: os.path.join(schema_path, topic) for
+            sch = {os.path.basename(topic).split('.avsc')[0]: os.path.join(schema_path, topic) for
                     topic in os.listdir(schema_path)}
+            return sch
 
     @classmethod
     def determine_ip(cls):
